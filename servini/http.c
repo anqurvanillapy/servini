@@ -1,10 +1,10 @@
 #define _GNU_SOURCE
 
 #include <stdio.h>
-#include <inttypes.h>
 
 int
-main(int argc, char const *argv[])
+main(int argc, const char *argv[])
 {
+    // TODO
     return 0;
 }
