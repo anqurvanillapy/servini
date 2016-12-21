@@ -1,7 +1,9 @@
+#include "socket.h"
+
 #include <string.h>
 #include <time.h>
 
-#include "socket.h"
+#define PORT 2929
 
 int
 main(int argc, const char *argv[])
@@ -13,17 +15,18 @@ main(int argc, const char *argv[])
     struct sockaddr_in servaddr;
 
     if (argc != 2)
-        err_quit("usage: a.out <IPaddress> 2929\n");
+        err_quit("usage: a.out <IPaddress>\n");
 
     listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     Inet_pton(AF_INET, argv[1], &servaddr.sin_addr);
-    servaddr.sin_port   = htons(2929);
+    servaddr.sin_port   = htons(PORT);
+
+    printf("Start serving on http://%s:%d ...\n", argv[1], PORT);
 
     Bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr));
-
     Listen(listenfd, LISTENQ);
 
     for (;;) {
@@ -31,9 +34,9 @@ main(int argc, const char *argv[])
 
         ticks = time(NULL);
         snprintf(buf, sizeof(buf),
-                 "HTTP/1.1 200 OK\r\n\r\n%.24s\r\n", ctime(&ticks));
+                 "HTTP/1.0 200 OK\r\n\r\n%.24s\r\n", ctime(&ticks));
         Write(connfd, buf, strlen(buf));
-        fputs(buf, stdout);
+        printf("[log] new request\n");
 
         Close(connfd);
     }
