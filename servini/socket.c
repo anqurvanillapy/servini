@@ -9,7 +9,6 @@ int
 main(int argc, const char *argv[])
 {
     int listenfd, connfd;
-    char recvline[MAXLINE + 1];
     char buf[BUFSIZ];
     time_t ticks;
     struct sockaddr_in servaddr;
