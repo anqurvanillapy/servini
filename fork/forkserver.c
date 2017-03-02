@@ -1,4 +1,4 @@
-#include "socket.h"
+#include "include/socket.h"
 
 #include <string.h>
 #include <time.h>
@@ -14,7 +14,7 @@ main(int argc, const char *argv[])
     struct sockaddr_in servaddr;
 
     if (argc != 2)
-        err_quit("usage: a.out <IPaddress>\n");
+        err_quit("usage: a.out IPaddress\n");
 
     listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 

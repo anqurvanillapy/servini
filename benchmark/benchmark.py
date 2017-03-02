@@ -11,6 +11,7 @@ if len(sys.argv) != 2:
 
 
 def main():
+    print('sending {} requests ...'.format(REQNUM))
     start = time.time()
 
     for i in range(REQNUM):
@@ -18,7 +19,6 @@ def main():
             s.connect((HOST, PORT))
             s.sendall(b'GET /\r\n\r\n')
             data = s.recv(1024)
-        print('.', end='')
 
     elapsed = (time.time() - start)
     print('elapsed:\t{}\ts'.format(elapsed))

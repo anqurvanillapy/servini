@@ -2,17 +2,17 @@ CC=gcc
 FLAGS_DEV=-Wall -Wextra -pedantic -Ofast
 
 .PHONY: clean
-default: build
+default: fork
 
-socket.o: servini/socket.c
-	$(CC) -c servini/socket.c $(FLAGS_DEV)
+forkserver.o: fork/forkserver.c
+	$(CC) -c fork/forkserver.c $(FLAGS_DEV)
 
-wrapper.o: servini/common/wrapper.c
-	$(CC) -c servini/common/wrapper.c $(FLAGS_DEV)
+wrapper.o: fork/common/wrapper.c
+	$(CC) -c fork/common/wrapper.c $(FLAGS_DEV)
 
-build: socket.o wrapper.o
-	mkdir -p build
-	$(CC) socket.o wrapper.o $(FLAGS_DEV)
+fork: forkserver.o wrapper.o
+	mkdir -p build/
+	$(CC) forkserver.o wrapper.o $(FLAGS_DEV)
 	mv a.out build/
 
 clean:
