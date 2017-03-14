@@ -2,12 +2,14 @@ import sys, time
 from socket import *
 
 
-HOST = ''
-PORT = 2929
-REQNUM = 100000
+try: assert(len(sys.argv) == 3)
+except:
+    print('usage: {} ip_address port'.format(sys.argv[0]))
+    sys.exit(1)
 
-if len(sys.argv) != 2:
-    raise Exception('usage: {} <IPaddress>'.format(sys.argv[0]))
+
+HOST, PORT = (sys.argv[i] for i in range(1, 3))
+REQNUM = 10000
 
 
 def main():
@@ -16,7 +18,7 @@ def main():
 
     for i in range(REQNUM):
         with socket(AF_INET, SOCK_STREAM) as s:
-            s.connect((HOST, PORT))
+            s.connect((HOST, int(PORT)))
             s.sendall(b'GET /\r\n\r\n')
             data = s.recv(1024)
 
