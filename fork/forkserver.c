@@ -2,21 +2,6 @@
 
 #include <string.h>
 
-/// Send the current server time.
-void
-handle_request(int connfd)
-{
-    // Buffer for sending server time.
-    char buf[BUFSIZ];
-    time_t ticks;
-    
-    ticks = time(NULL);
-    snprintf(buf, sizeof(buf),
-        "HTTP/1.0 200 OK\r\n\r\n%.24s\r\n", ctime(&ticks));
-    Write(connfd, buf, strlen(buf));
-    printf("[log] new request\n");
-}
-
 int
 main(int argc, const char *argv[])
 {
