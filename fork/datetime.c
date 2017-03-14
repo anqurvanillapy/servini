@@ -1,16 +1,18 @@
 #include "../include/servini.h"
 
 #include <string.h>
+#include <time.h>
 
-/// Send the current server time.
+/// Serve the current server time.
 void
 handle_request(int connfd)
 {
-    // Buffer for sending server time.
+    // Server time string buffer.
     char buf[BUFSIZ];
     time_t ticks;
     
     ticks = time(NULL);
+    // Simple HTTP/1.0 response mockup.
     snprintf(buf, sizeof(buf),
         "HTTP/1.0 200 OK\r\n\r\n%.24s\r\n", ctime(&ticks));
     Write(connfd, buf, strlen(buf));
@@ -24,7 +26,7 @@ main(int argc, const char *argv[])
     int listenfd, connfd;
     struct sockaddr_in servaddr;
 
-    if (argc != 3) err_quit("usage: forkserver ip_address port\n");
+    if (argc != 3) err_quit("usage: datetime ip_address port\n");
 
     listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 
@@ -47,8 +49,8 @@ main(int argc, const char *argv[])
             // Child closes listening socket.
             Close(listenfd);
 
-            // Print all the client input.
-            while (read(connfd, buf, sizeof(buf)) > 0) fputs(buf, stdout);
+            // Handle the request.
+            handle_request(connfd);
 
             // Done with this client.
             Close(connfd);

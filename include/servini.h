@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -22,12 +23,15 @@
     exit(EXIT_FAILURE);         \
 } while(0)
 
-void  Inet_pton(int af, const char *src, void *dst);
-int   Socket(int family, int type, int protocol);
-void  Bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
-void  Listen(int sockfd, int backlog);
-int   Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-void  Write(int fd, const void *buf, size_t count);
-void  Close(int fd);
+void    Inet_pton(int af, const char *src, void *dst);
+int     Socket(int family, int type, int protocol);
+void    Bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+void    Connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+void    Listen(int sockfd, int backlog);
+int     Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+void    Read(int fd, void *buf, size_t count);
+void    Write(int fd, const void *buf, size_t count);
+void    Close(int fd);
+pid_t   Fork(void);
 
 #endif // !__servini__socket_h
