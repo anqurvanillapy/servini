@@ -5,6 +5,7 @@
 int
 main(int argc, const char *argv[])
 {
+    char buf[BUFSIZ];
     pid_t pid;
     int listenfd, connfd;
     struct sockaddr_in servaddr;

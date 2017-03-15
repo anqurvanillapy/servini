@@ -20,7 +20,14 @@ fork: forkserver.o forkclient.o wrapper.o
 	mv forkserver forkclient build/
 	rm -rf *.o
 
-datetime: datetime.c wrapper.o
+datetime.o: fork/datetime.c
+	$(CC) -c fork/datetime.c $(FLAGS_DEV)
+
+datetime: datetime.o wrapper.o
+	mkdir -p build/
+	$(CC) wrapper.o datetime.o -o datetime $(FLAGS_DEV)
+	mv datetime build/
+	rm -rf *.o
 
 clean:
 	rm -rf build
