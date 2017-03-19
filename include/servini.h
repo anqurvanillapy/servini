@@ -1,5 +1,5 @@
-#ifndef __servini__socket_h
-#define __servini__socket_h
+#ifndef __servini__servini_h
+#define __servini__servini_h
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,4 +34,4 @@ void    Write(int fd, const void *buf, size_t count);
 void    Close(int fd);
 pid_t   Fork(void);
 
-#endif // !__servini__socket_h
+#endif // !__servini__servini_h
